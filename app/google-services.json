@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "118779452721",
+    "firebase_url": "https://nammarailu-37ab9-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "nammarailu-37ab9",
+    "storage_bucket": "nammarailu-37ab9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:118779452721:android:4d30880da7bf7c8514e410",
+        "android_client_info": {
+          "package_name": "com.example.nammaraliubuddy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0a8Y_WYKDKxCabbcPw8xNDuc7Gsp_TG4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
