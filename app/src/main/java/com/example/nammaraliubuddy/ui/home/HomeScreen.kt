@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.Radar
 import androidx.compose.material.icons.filled.Train
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -54,6 +55,13 @@ fun HomeScreen(navController: NavController) {
                 subtitle = "Where is my Train? (IRCTC style)",
                 icon = Icons.Default.NotificationsActive,
                 onClick = { navController.navigate(Screen.Map.route) }
+            )
+
+            HomeCard(
+                title = "Live Pings & Alerts",
+                subtitle = "Recent Platform Notifications",
+                icon = Icons.Default.Radar,
+                onClick = { navController.navigate(Screen.Pings.route) }
             )
         }
     }

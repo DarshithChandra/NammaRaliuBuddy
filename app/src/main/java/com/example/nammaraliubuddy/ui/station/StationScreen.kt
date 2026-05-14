@@ -19,7 +19,8 @@ import com.google.firebase.database.*
 
 data class StationInfo(
     val name: String,
-    val coachPosition: String
+    val coachPosition: String,
+    val defaultPlatform: String
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,37 +28,59 @@ data class StationInfo(
 fun StationScreen() {
     var selectedStation by remember { mutableStateOf<StationInfo?>(null) }
     val stations = listOf(
-        StationInfo("Bagalkot", "General Coach: Front"),
-        StationInfo("Ballari", "General Coach: Rear"),
-        StationInfo("Belagavi", "General Coach: Middle"),
-        StationInfo("Bengaluru Rural", "General Coach: Front"),
-        StationInfo("Bengaluru Urban", "General Coach: Front"),
-        StationInfo("Bidar", "General Coach: Rear"),
-        StationInfo("Chamarajanagar", "General Coach: Front"),
-        StationInfo("Chikballapur", "General Coach: Middle"),
-        StationInfo("Chikkamagaluru", "General Coach: Front"),
-        StationInfo("Chitradurga", "General Coach: Middle"),
-        StationInfo("Dakshina Kannada", "General Coach: Rear"),
-        StationInfo("Davanagere", "General Coach: Middle"),
-        StationInfo("Dharwad", "General Coach: Front"),
-        StationInfo("Gadag", "General Coach: Middle"),
-        StationInfo("Hassan", "General Coach: Rear"),
-        StationInfo("Haveri", "General Coach: Middle"),
-        StationInfo("Kalaburagi", "General Coach: Front"),
-        StationInfo("Kodagu", "General Coach: Rear"),
-        StationInfo("Kolar", "General Coach: Middle"),
-        StationInfo("Koppal", "General Coach: Front"),
-        StationInfo("Mandya", "General Coach: Front (Engine side)"),
-        StationInfo("Mysuru", "General Coach: Rear"),
-        StationInfo("Raichur", "General Coach: Middle"),
-        StationInfo("Ramanagara", "General Coach: Front"),
-        StationInfo("Shivamogga", "General Coach: Middle"),
-        StationInfo("Tumakuru", "General Coach: Rear"),
-        StationInfo("Udupi", "General Coach: Front"),
-        StationInfo("Uttara Kannada", "General Coach: Middle"),
-        StationInfo("Vijayapura", "General Coach: Front"),
-        StationInfo("Yadgir", "General Coach: Rear"),
-        StationInfo("Vijayanagara", "General Coach: Middle")
+        StationInfo("Arsikere Junction", "General Coach: Middle", "2"),
+        StationInfo("Bagalkot", "General Coach: Front", "1"),
+        StationInfo("Ballari Junction", "General Coach: Rear", "2"),
+        StationInfo("Belagavi", "General Coach: Middle", "1"),
+        StationInfo("Bengaluru Cantt.", "General Coach: Front", "2"),
+        StationInfo("Bengaluru Rural", "General Coach: Front", "1"),
+        StationInfo("Bengaluru Urban", "General Coach: Front", "1"),
+        StationInfo("Bhadravati", "General Coach: Middle", "1"),
+        StationInfo("Bidar", "General Coach: Rear", "1"),
+        StationInfo("Birur Junction", "General Coach: Middle", "3"),
+        StationInfo("Chamarajanagar", "General Coach: Front", "1"),
+        StationInfo("Chikballapur", "General Coach: Middle", "1"),
+        StationInfo("Chikkamagaluru", "General Coach: Front", "1"),
+        StationInfo("Chitradurga", "General Coach: Middle", "1"),
+        StationInfo("Dakshina Kannada", "General Coach: Rear", "1"),
+        StationInfo("Davanagere", "General Coach: Middle", "1"),
+        StationInfo("Dharwad", "General Coach: Front", "1"),
+        StationInfo("Gadag Junction", "General Coach: Middle", "2"),
+        StationInfo("Gangavathi", "General Coach: Middle", "1"),
+        StationInfo("Gokak", "General Coach: Front", "1"),
+        StationInfo("Hassan Junction", "General Coach: Rear", "1"),
+        StationInfo("Haveri", "General Coach: Middle", "1"),
+        StationInfo("Hindupur", "General Coach: Front", "2"),
+        StationInfo("Hosapete Junction", "General Coach: Front", "1"),
+        StationInfo("Hubballi Junction", "General Coach: Front", "1"),
+        StationInfo("Kalaburagi Junction", "General Coach: Front", "1"),
+        StationInfo("Karwar", "General Coach: Rear", "1"),
+        StationInfo("Kodagu", "General Coach: Rear", "1"),
+        StationInfo("Kolar", "General Coach: Middle", "1"),
+        StationInfo("Koppal", "General Coach: Front", "1"),
+        StationInfo("Krishnarajapuram", "General Coach: Rear", "4"),
+        StationInfo("Londa Junction", "General Coach: Middle", "2"),
+        StationInfo("Mandya", "General Coach: Front (Engine side)", "2"),
+        StationInfo("Mangaluru Central", "General Coach: Rear", "1"),
+        StationInfo("Mangaluru Jn", "General Coach: Front", "2"),
+        StationInfo("Mysuru Junction", "General Coach: Rear", "6"),
+        StationInfo("Nippani", "General Coach: Rear", "1"),
+        StationInfo("Raichur", "General Coach: Middle", "1"),
+        StationInfo("Ramanagara", "General Coach: Front", "3"),
+        StationInfo("Ranibennur", "General Coach: Middle", "2"),
+        StationInfo("Sagar", "General Coach: Front", "1"),
+        StationInfo("Sakleshpur", "General Coach: Middle", "1"),
+        StationInfo("Shivamogga Town", "General Coach: Middle", "1"),
+        StationInfo("Sirsi", "General Coach: Middle", "1"),
+        StationInfo("Tumakuru", "General Coach: Rear", "1"),
+        StationInfo("Udupi", "General Coach: Front", "1"),
+        StationInfo("Uttara Kannada", "General Coach: Middle", "1"),
+        StationInfo("Vijayapura", "General Coach: Front", "1"),
+        StationInfo("Wadi Junction", "General Coach: Middle", "4"),
+        StationInfo("Whitefield", "General Coach: Front", "3"),
+        StationInfo("Yadgir", "General Coach: Rear", "1"),
+        StationInfo("Vijayanagara", "General Coach: Middle", "1"),
+        StationInfo("Yesvantpur Junction", "General Coach: Front", "4")
     ).sortedBy { it.name }
 
     Scaffold(
@@ -112,7 +135,7 @@ fun StationScreen() {
             selectedStation?.let { station ->
                 CoachInfoCard(station)
                 Spacer(modifier = Modifier.height(16.dp))
-                AutomatedPlatformCard(station.name)
+                AutomatedPlatformCard(station)
             }
         }
     }
@@ -188,14 +211,17 @@ fun CoachBox(label: String, isTarget: Boolean = false, isEngine: Boolean = false
 }
 
 @Composable
-fun AutomatedPlatformCard(stationName: String) {
-    var platform by remember { mutableStateOf("--") }
-    val database = FirebaseDatabase.getInstance().getReference("pings").child(stationName)
+fun AutomatedPlatformCard(station: StationInfo) {
+    var platform by remember { mutableStateOf(station.defaultPlatform) }
+    val database = FirebaseDatabase.getInstance().getReference("pings").child(station.name)
 
-    LaunchedEffect(stationName) {
+    LaunchedEffect(station.name) {
         database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                platform = snapshot.child("platform").getValue(String::class.java) ?: "TBD"
+                val pf = snapshot.child("platform").getValue(String::class.java)
+                if (pf != null) {
+                    platform = pf
+                }
             }
             override fun onCancelled(error: DatabaseError) {}
         })
